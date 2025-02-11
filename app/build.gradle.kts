@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,8 +70,9 @@ dependencies {
 
 
     //implementation (libs.androidx.biometric.v120alpha05)
-    implementation("androidx.biometric:biometric:1.2.0-alpha05")
-    implementation("androidx.navigation:navigation-compose:2.7.5")
-   // implementation (libs.androidx.lifecycle.viewmodel.ktx)
-   // implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.biometric)
+    implementation("androidx.navigation:navigation-compose:2.8.6")
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.runtime.ktx.v261)
 }
