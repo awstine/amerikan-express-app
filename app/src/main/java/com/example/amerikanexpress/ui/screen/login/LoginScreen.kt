@@ -38,7 +38,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.amerikanexpress.R
@@ -151,28 +155,6 @@ fun LoginScreen(viewModel: LoginViewModel) {
 
         Row(
             modifier = Modifier
-                .padding(start = 4.dp, end = 4.dp,)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.shield),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 7.dp)
-                        .size(25.dp)
-                )
-                Text("Security Tips")
-            }
-            Text("New User?")
-
-        }
-
-        Row(
-            modifier = Modifier
                 .padding(start = 8.dp, end = 6.dp,)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -206,22 +188,6 @@ fun LoginScreen(viewModel: LoginViewModel) {
             )
         }
 
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            // horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("New User?")
-            TextButton(
-                onClick = { },
-                modifier = Modifier
-                    .padding(8.dp)
-            ) {
-                Text("Register")
-            }
-        }
-
         //Fingerprint
         Row(
             horizontalArrangement = Arrangement.Center
@@ -249,6 +215,39 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         }
                     }
             )
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(start = 8.dp, end = 4.dp,)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.shield),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 7.dp)
+                        .size(25.dp)
+                )
+                Text("Security Tips")
+            }
+            TextButton(
+                onClick = { },
+                modifier = Modifier
+            ) {
+                Text(
+                    "New User? Register",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+
+
         }
 
         Spacer(Modifier.height(120.dp))
@@ -309,6 +308,7 @@ fun LoginScreen(viewModel: LoginViewModel) {
             modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Apply now
@@ -328,10 +328,15 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(
-                    "Apply now",
-                    modifier = Modifier.padding(start = 8.dp)
-                ) // Add padding to separate text from image
+                TextButton(
+                    onClick = { },
+                    modifier = Modifier
+                ) {
+                    Text(
+                        "Apply now",
+                        modifier = Modifier
+                    ) // Add padding to separate text from image
+                }
             }
 
             // Amex offers
@@ -351,7 +356,12 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text("Amex offers", modifier = Modifier.padding(start = 8.dp))
+                TextButton(
+                    onClick = { },
+                    modifier = Modifier
+                ) {
+                    Text("Amex offers", modifier = Modifier)
+                }
             }
 
             // Resume application
@@ -371,21 +381,29 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text("Resume application", modifier = Modifier.padding(start = 8.dp))
+                TextButton(
+                    onClick = { },
+                    modifier = Modifier
+                ) {
+                Text("Resume application",
+                    modifier = Modifier)
             }
+                }
         }
 
         Row(
             modifier = Modifier
-                .padding(12.dp)
                 .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
 
-            // Amex offers
+            // contact us
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.wrapContentWidth().padding(end = 40.dp)
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(end = 40.dp, )
             ) {
                 Box(
                     modifier = Modifier
@@ -399,13 +417,17 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text("Contact Us", modifier = Modifier.padding(start = 8.dp))
+                TextButton(
+                    onClick = { },
+                ) {
+                Text("Contact Us", modifier = Modifier)
+            }
             }
 
-            // Resume application
+            // privacy statement
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier.wrapContentWidth().padding(end = 10.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -419,7 +441,12 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text("Privacy Statement", modifier = Modifier.padding(start = 8.dp))
+                TextButton(
+                    onClick = { },
+                    modifier = Modifier
+                ) {
+                    Text("Privacy Statement", modifier = Modifier)
+                }
             }
 
             Row(
@@ -438,11 +465,25 @@ fun LoginScreen(viewModel: LoginViewModel) {
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text("Terms of Service", modifier = Modifier.padding(start = 8.dp))
+                TextButton(
+                    onClick = { },
+                    modifier = Modifier
+                ) {
+                    Text("Terms of Service", modifier = Modifier)
+                }
             }
         }
-
-        Text("© 2021 American Express Company. All rights reserved.",)
-
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 45.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                "© 2025 American Express Company. All rights reserved.",
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+            )
+        }
     }
 }
