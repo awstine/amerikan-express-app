@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.amerikanexpress.ui.screen.login.LoginScreen
 import com.example.amerikanexpress.ui.screen.login.LoginViewModel
+import com.example.amerikanexpress.ui.screen.sighnUp.SignUpScreen
+import com.example.amerikanexpress.ui.screen.sighnUp.SignUpViewModel
 
 
 class MainActivity : FragmentActivity() {
@@ -21,7 +23,8 @@ class MainActivity : FragmentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen(viewModel = LoginViewModel())
+                   // LoginScreen(viewModel = LoginViewModel())
+                    SignUpScreen(viewModel = SignUpViewModel())
                 }
             }
         }
