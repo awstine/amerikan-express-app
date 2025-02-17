@@ -62,7 +62,9 @@ fun OTPScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+
         // Verify Button
+
         Button(onClick = {
             val otp = otpDigits.joinToString("")
             if (otp.length == 4) {
