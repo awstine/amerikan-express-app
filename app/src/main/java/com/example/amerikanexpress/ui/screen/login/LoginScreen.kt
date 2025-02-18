@@ -42,11 +42,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import com.example.amerikanexpress.R
+import com.example.amerikanexpress.ui.screen.data.Screens
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun LoginScreen(viewModel: LoginViewModel) {
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    navController: NavController
+) {
 
     val userId by viewModel.userId.observeAsState("")
     val password by viewModel.password.observeAsState("")
@@ -234,7 +239,9 @@ fun LoginScreen(viewModel: LoginViewModel) {
                 Text("Security Tips")
             }
             TextButton(
-                onClick = { },
+                onClick = {
+                    navController.navigate(Screens.SignUpScreen.route)
+                },
                 modifier = Modifier
             ) {
                 Text(
@@ -243,8 +250,6 @@ fun LoginScreen(viewModel: LoginViewModel) {
                     fontWeight = FontWeight.SemiBold,
                 )
             }
-
-
         }
 
         Spacer(Modifier.height(120.dp))

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270149369289",
+    "project_id": "amerikanexpress-bdce6",
+    "storage_bucket": "amerikanexpress-bdce6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270149369289:android:bb3889440fc994696bfc18",
+        "android_client_info": {
+          "package_name": "com.example.amerikanexpress"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6xS6H7gCW1j5NG8qbPuklwpmSz05i0nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

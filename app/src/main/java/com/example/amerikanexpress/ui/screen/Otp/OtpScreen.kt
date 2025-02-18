@@ -17,11 +17,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.amerikanexpress.ui.screen.Otp.OTPviewModel
 
 @Composable
-fun OTPScreen() {
-    val otpDigits = remember { mutableStateListOf("", "", "", "") }
-    var message by remember { mutableStateOf("") }
+fun OTPScreen(
+    navController: NavController
+) {
+    val viewModel: OTPviewModel = remember { OTPviewModel() }
+    val otpDigits = viewModel.otpDigits
+    var message = viewModel.message.value
     val focusRequesters = remember { List(4) { FocusRequester() } }
 
     Column(

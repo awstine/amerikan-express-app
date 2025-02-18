@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.amerikanexpress.ui.screen.OtpScreen.OTPScreen
 import com.example.amerikanexpress.ui.screen.login.LoginScreen
 import com.example.amerikanexpress.ui.screen.login.LoginViewModel
 import com.example.amerikanexpress.ui.screen.sighnUp.SignUpScreen
@@ -19,12 +23,22 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "register"
                 ) {
-                   // LoginScreen(viewModel = LoginViewModel())
-                    SignUpScreen(viewModel = SignUpViewModel())
+                    composable("register") {
+                        SignUpScreen(viewModel = SignUpViewModel(), navController)
+
+                    }
+                    composable("login") {
+                        LoginScreen(viewModel = LoginViewModel(), navController)
+                    }
+                    composable("otp") {
+                        OTPScreen(navController)
+                    }
                 }
             }
         }
