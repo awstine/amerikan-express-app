@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -52,12 +53,23 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     navController: NavController
 ) {
-
-    val userId by viewModel.userId.observeAsState("")
+    val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
-    val passwordVisible by remember { mutableStateOf(false) }
+    val loginResult by viewModel.loginResult.observeAsState(null)
+    val errorMessage = remember { mutableStateOf<String?>(null) }
 
     val context = LocalContext.current
+
+    LaunchedEffect(loginResult) {
+        loginResult?.getOrNull()?. let {success ->
+            if (success){
+                navController.navigate(Screens.HomeScreen.route)
+            }
+        }
+        loginResult?.exceptionOrNull()?.let { error ->
+           errorMessage.value = error.message?: "Login Failed"
+        }
+    }
 
     // Ensure the context is a FragmentActivity
     val activity = context as? FragmentActivity
@@ -105,13 +117,11 @@ fun LoginScreen(
         )
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(10.dp),
-        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
-        //verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(40.dp))
 
@@ -123,17 +133,16 @@ fun LoginScreen(
                 .height(100.dp)
         )
 
-
         Text("Good Afternoon!")
 
         // User ID
         Row(modifier = Modifier.padding(16.dp)) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text("User Id")
+                Text("Email")
                 OutlinedTextField(
-                    value = userId,
-                    onValueChange = { viewModel.updateUseerId(it) },
-                    placeholder = { Text("Enter your User ID") },
+                    value = email,
+                    onValueChange = { viewModel.updateEmail(it) },
+                    placeholder = { Text("Enter Email") },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -157,7 +166,7 @@ fun LoginScreen(
 
         Row(
             modifier = Modifier
-                .padding(start = 8.dp, end = 6.dp,)
+                .padding(start = 8.dp, end = 6.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -172,12 +181,21 @@ fun LoginScreen(
                 )
             }
             Text("Forgot Password?")
-
         }
 
-        //Login button
+        if (errorMessage.value != null){
+            Text(
+                text = errorMessage.value!!,
+                color = Color.Red,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+
+        // Login button
         Button(
-            onClick = { },
+            onClick = {
+                viewModel.login(email, password)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -190,7 +208,7 @@ fun LoginScreen(
             )
         }
 
-        //Fingerprint
+        // Fingerprint
         Row(
             horizontalArrangement = Arrangement.Center
         ) {
@@ -221,7 +239,7 @@ fun LoginScreen(
 
         Row(
             modifier = Modifier
-                .padding(start = 8.dp, end = 4.dp,)
+                .padding(start = 8.dp, end = 4.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -253,7 +271,6 @@ fun LoginScreen(
         }
 
         Spacer(Modifier.height(120.dp))
-
 
         Row {
             HorizontalDivider(
@@ -337,7 +354,7 @@ fun LoginScreen(
                     Text(
                         "Apply now",
                         modifier = Modifier
-                    ) // Add padding to separate text from image
+                    )
                 }
             }
 
@@ -387,10 +404,9 @@ fun LoginScreen(
                     onClick = { },
                     modifier = Modifier
                 ) {
-                Text("Resume application",
-                    modifier = Modifier)
-            }
+                    Text("Resume application", modifier = Modifier)
                 }
+            }
         }
 
         Row(
@@ -399,13 +415,12 @@ fun LoginScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-
-            // contact us
+            // Contact us
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .wrapContentWidth()
-                    .padding(end = 40.dp, )
+                    .padding(end = 40.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -422,11 +437,11 @@ fun LoginScreen(
                 TextButton(
                     onClick = { },
                 ) {
-                Text("Contact Us", modifier = Modifier)
-            }
+                    Text("Contact Us", modifier = Modifier)
+                }
             }
 
-            // privacy statement
+            // Privacy statement
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.wrapContentWidth().padding(end = 10.dp)
@@ -475,6 +490,7 @@ fun LoginScreen(
                 }
             }
         }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -488,4 +504,6 @@ fun LoginScreen(
             )
         }
     }
+
 }
+
