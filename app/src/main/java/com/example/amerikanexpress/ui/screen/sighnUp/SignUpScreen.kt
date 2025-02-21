@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.amerikanexpress.ui.screen.data.Screens
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 //@Preview
@@ -39,10 +41,21 @@ fun SignUpScreen(
     navController: NavController
 ) {
 
+   // CheckUser(navController)
+
     var isChecked by remember { mutableStateOf(false) }
     val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
     val confirmPassword by viewModel.confirmPassword.observeAsState("")
+    val signUpResult by viewModel.signUpResult.observeAsState(null)
+
+    LaunchedEffect(signUpResult) {
+        signUpResult?.getOrNull()?.let { succes ->
+            if (succes){
+                navController.navigate(Screens.LoginScreen.route)
+            }
+        }
+    }
 
 
     Column(
@@ -102,10 +115,23 @@ fun SignUpScreen(
             )
 
             Spacer(modifier = Modifier.height(40.dp))
+
+            //Error message
+            signUpResult?.exceptionOrNull()?.let{ error ->
+                Text(text = error.message?: "An error occured", color = MaterialTheme.colorScheme.error)
+
+            }
+
         }
 
         Button(
-            onClick = { navController.navigate(Screens.OtpScreen.route) },
+            onClick = {
+                if(password == confirmPassword){
+                    viewModel.signUpUser(email,password)
+                }else{
+
+                }
+            },
             modifier = Modifier
                 .padding(top = 10.dp)
                 .fillMaxWidth(),
@@ -158,6 +184,27 @@ fun SignUpScreen(
                 fontSize = 18.sp,
                 modifier = Modifier.weight(1f)
             )
+        }
+    }
+
+    LaunchedEffect(signUpResult) {
+        signUpResult?.getOrNull()?.let {
+            if(it){
+                navController.navigate(Screens.LoginScreen.route)
+            }
+        }
+    }
+}
+
+
+@Composable
+fun CheckUser(navController: NavController) {
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+
+    LaunchedEffect(Unit) {
+        if (currentUser != null){
+            navController.navigate(Screens.HomeScreen.route)
         }
     }
 }
