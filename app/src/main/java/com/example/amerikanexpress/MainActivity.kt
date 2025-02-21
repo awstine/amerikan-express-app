@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.amerikanexpress.ui.screen.HomeScreen
 import com.example.amerikanexpress.ui.screen.OtpScreen.OTPScreen
 import com.example.amerikanexpress.ui.screen.login.LoginScreen
 import com.example.amerikanexpress.ui.screen.login.LoginViewModel
 import com.example.amerikanexpress.ui.screen.sighnUp.SignUpScreen
 import com.example.amerikanexpress.ui.screen.sighnUp.SignUpViewModel
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : FragmentActivity() {
@@ -23,6 +25,8 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
+                FirebaseApp.initializeApp(this)
+
                 val navController = rememberNavController()
 
                 NavHost(
@@ -38,6 +42,9 @@ class MainActivity : FragmentActivity() {
                     }
                     composable("otp") {
                         OTPScreen(navController)
+                    }
+                    composable("home"){
+                        HomeScreen(navController)
                     }
                 }
             }
