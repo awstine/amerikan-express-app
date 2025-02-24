@@ -63,7 +63,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runtime.livedata)
-  //  implementation(libs.firebase.auth)
+    implementation(libs.androidx.animation.core.lint)
+    //  implementation(libs.firebase.auth)
   //  implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -73,7 +74,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.biometric)
+   // implementation(libs.androidx.biometric)
     implementation("androidx.navigation:navigation-compose:2.8.6")
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
@@ -82,6 +83,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:23.2.0")
     implementation("com.google.firebase:firebase-firestore:25.1.2")
     implementation("com.google.firebase:firebase-storage:21.0.1")
+    implementation ("androidx.biometric:biometric:1.2.0-alpha05")
    // implementation platform('com.google.firebase:firebase-bom:33.9.0')
 
 }
