@@ -67,7 +67,7 @@ fun LoginScreen(
             }
         }
         loginResult?.exceptionOrNull()?.let { error ->
-           errorMessage.value = error.message?: "Login Failed"
+            errorMessage.value = error.message?: "Login Failed"
         }
     }
 
@@ -107,6 +107,7 @@ fun LoginScreen(
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     println("Authentication succeeded!")
+                    navController.navigate(Screens.HomeScreen.route)
                 }
 
                 override fun onAuthenticationFailed() {
@@ -116,6 +117,8 @@ fun LoginScreen(
             }
         )
     }
+
+
 
     Column(
         modifier = Modifier
@@ -506,4 +509,5 @@ fun LoginScreen(
     }
 
 }
+
 
