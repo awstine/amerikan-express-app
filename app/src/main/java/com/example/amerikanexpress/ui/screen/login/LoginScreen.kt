@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +47,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import com.example.amerikanexpress.R
 import com.example.amerikanexpress.ui.screen.data.Screens
+import java.util.Calendar
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -136,7 +138,7 @@ fun LoginScreen(
                 .height(100.dp)
         )
 
-        Text("Good Afternoon!")
+        Greeting()
 
         // User ID
         Row(modifier = Modifier.padding(16.dp)) {
@@ -223,7 +225,9 @@ fun LoginScreen(
                     .size(22.dp)
             )
             Text(
-                "Use Fingerprint",
+                text = "Use Fingerprint",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
                     .clickable {
                         if (canAuthenticate == androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS) {
@@ -447,7 +451,9 @@ fun LoginScreen(
             // Privacy statement
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.wrapContentWidth().padding(end = 10.dp)
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .padding(end = 10.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -508,6 +514,28 @@ fun LoginScreen(
         }
     }
 
+}
+
+@Composable
+fun Greeting() {
+    val greetringText = greetingMessage()
+
+    Text(
+        text = greetringText,
+        fontSize = 22.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
+
+}
+
+fun greetingMessage():String{
+    val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    return when (hour){
+        in 0..5 -> "Good Night!"
+        in 6..11 -> "Good Morning!"
+        in 12..17 -> "Good Afternoon!"
+        else -> "Good Evening!"
+    }
 }
 
 
