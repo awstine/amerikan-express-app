@@ -1,6 +1,7 @@
 package com.example.amerikanexpress
 
 
+import HomeScreen
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.amerikanexpress.ui.screen.HomeScreen
 import com.example.amerikanexpress.ui.screen.OtpScreen.OTPScreen
 import com.example.amerikanexpress.ui.screen.login.LoginScreen
 import com.example.amerikanexpress.ui.screen.login.LoginViewModel
@@ -43,8 +43,9 @@ class MainActivity : FragmentActivity() {
                     composable("otp") {
                         OTPScreen(navController)
                     }
+                    composable("profile"){navController}
                     composable("home"){
-                        HomeScreen(navController)
+                        HomeScreen()
                     }
                 }
             }
