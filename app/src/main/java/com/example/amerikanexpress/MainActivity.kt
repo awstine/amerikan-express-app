@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.amerikanexpress.ui.screen.OtpScreen.OTPScreen
+import com.example.amerikanexpress.ui.screen.ProfileScreen
 import com.example.amerikanexpress.ui.screen.login.LoginScreen
 import com.example.amerikanexpress.ui.screen.login.LoginViewModel
 import com.example.amerikanexpress.ui.screen.sighnUp.SignUpScreen
@@ -43,9 +44,11 @@ class MainActivity : FragmentActivity() {
                     composable("otp") {
                         OTPScreen(navController)
                     }
-                    composable("profile"){navController}
+                    composable("profile"){
+                        ProfileScreen(navController)
+                    }
                     composable("home"){
-                        HomeScreen()
+                        HomeScreen(navController)
                     }
                 }
             }
