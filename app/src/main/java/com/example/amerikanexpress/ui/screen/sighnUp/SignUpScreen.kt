@@ -195,16 +195,3 @@ fun SignUpScreen(
         }
     }
 }
-
-
-@Composable
-fun CheckUser(navController: NavController) {
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
-
-    LaunchedEffect(Unit) {
-        if (currentUser != null){
-            navController.navigate(Screens.HomeScreen.route)
-        }
-    }
-}

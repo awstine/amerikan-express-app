@@ -1,6 +1,7 @@
 package com.example.amerikanexpress.ui.screen.OtpScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -11,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -24,10 +27,14 @@ import com.example.amerikanexpress.ui.screen.Otp.OTPviewModel
 fun OTPScreen(
     navController: NavController
 ) {
-    val viewModel: OTPviewModel = remember { OTPviewModel() }
-    val otpDigits = viewModel.otpDigits
-    var message = viewModel.message.value
-    val focusRequesters = remember { List(4) { FocusRequester() } }
+//    val viewModel: OTPviewModel = remember { OTPviewModel() }
+//    val otpDigits = viewModel.otpDigits
+
+//    val focusRequesters = remember { List(4) { FocusRequester() } }
+
+    var otpValue by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
@@ -44,39 +51,87 @@ fun OTPScreen(
         Spacer(Modifier.height(60.dp))
 
         // OTP Input Fields (4 Boxes)
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.wrapContentWidth()
-        ) {
-            otpDigits.forEachIndexed { index, digit ->
-                OTPTextField(
-                    value = digit,
-                    onValueChange = { newValue ->
-                        if (newValue.length <= 1) {
-                            otpDigits[index] = newValue
-                            if (newValue.isNotEmpty() && index < 3) {
-                                focusRequesters[index + 1].requestFocus()
-                            }
+        BasicTextField(
+            value = otpValue,
+            onValueChange = {
+                if (it.length <= 4) {
+                    otpValue = it
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.NumberPassword
+            ),
+            decorationBox = { innerTextField ->
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    repeat(4) { index ->
+                        val char = when {
+                            index >= otpValue.length -> ""
+                            else -> otpValue[index].toString()
                         }
-                    },
-                    focusRequester = focusRequesters[index],
-                    modifier = Modifier.width(48.dp)
-                )
+                        val isFocused = otpValue.length == index
+                        Box(
+                            modifier = Modifier
+                                .width(50.dp)
+                                .height(50.dp)
+                                .border(
+                                    width = if (isFocused) 2.dp else 1.dp,
+                                    color = if (isFocused) Color.Black else Color.Gray,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(2.dp),
+                            contentAlignment = Alignment.Center // Center the content inside the Box
+                        ) {
+                            Text(
+                                text = char,
+                                style = MaterialTheme.typography.headlineSmall,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                }
             }
-        }
+        )
+
+
+//        Row(
+//            horizontalArrangement = Arrangement.spacedBy(8.dp),
+//            modifier = Modifier.wrapContentWidth()
+//        ) {
+//            otpDigits.forEachIndexed { index, digit ->
+//                OTPTextField(
+//                    value = digit,
+//                    onValueChange = { newValue ->
+//                        if (newValue.length <= 1) {
+//                            otpDigits[index] = newValue
+//                            if (newValue.isNotEmpty() && index < 3) {
+//                                focusRequesters[index + 1].requestFocus()
+//                            }
+//                        }
+//                    },
+//                    focusRequester = focusRequesters[index],
+//                    modifier = Modifier.width(48.dp)
+//                )
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
 
         // Verify Button
 
+
         Button(onClick = {
-            val otp = otpDigits.joinToString("")
-            if (otp.length == 4) {
-                message = if (verifyOTP(otp)) {
-                    "OTP verified successfully!"
+            if (otpValue.length == 4) {
+                if (verifyOTP(otpValue)) {
+                    // Navigate to the next screen
+                    navController.navigate("home")
                 } else {
-                    "Invalid OTP. Please try again."
+                    otpValue = ""
+                    message = "Invalid OTP. Please try again."
                 }
             } else {
                 message = "Please enter a 4-digit OTP."
@@ -84,7 +139,7 @@ fun OTPScreen(
         }, modifier = Modifier
             .padding(26.dp)
             .fillMaxWidth(),
-            shape = RoundedCornerShape(6.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text("Verify")
         }
@@ -94,10 +149,9 @@ fun OTPScreen(
         // Resend OTP Button
         TextButton(onClick = {
             val newOTP = generateOTP()
-            sendOTP(newOTP) // Simulate sending OTP
-            otpDigits.fill("") // Clear the OTP fields
-            focusRequesters[0].requestFocus() // Focus on the first field
-            message = "New OTP sent!"
+            sendOTP(newOTP)
+            otpValue = ""
+            message = "New OTP sent via email"
         }) {
             Text("Resend OTP")
         }
@@ -151,3 +205,5 @@ fun generateOTP(): String {
 fun sendOTP(otp: String) {
     println("OTP sent: $otp") // Replace with actual sending logic
 }
+
+//0700142012

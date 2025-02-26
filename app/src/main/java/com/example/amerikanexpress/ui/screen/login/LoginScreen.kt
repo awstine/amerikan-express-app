@@ -185,7 +185,13 @@ fun LoginScreen(
                     color = Color.Blue
                 )
             }
-            Text("Forgot Password?")
+            Text(
+                text = "Forgot Password?",
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate(Screens.OtpScreen.route)
+                    }
+            )
         }
 
         if (errorMessage.value != null){
