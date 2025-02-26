@@ -25,25 +25,23 @@ import androidx.navigation.compose.rememberNavController
 import com.example.amerikanexpress.ui.screen.data.Screens
 
 @Composable
-fun HomeScreen() {
-
+fun HomeScreen(
+    navController: NavController
+) {
     val balance = "$73.47"
-    val recentTransactions = listOf("Sent $5 to Walmart",
+    val recentTransactions = listOf(
+        "Sent $5 to Walmart",
         "Paid \$20 for Uber ride",
         "Sent \$10 to Starbucks",
-        "Paid \$12 for Netflix Subscription\n" +
-                "Sent \$15 to Amazon\n" +
-                "\n",
-        "Paid \$30 for Spotify Subscription\n" +
-                "\n",
-        "",
-        "",
-
-
-        )
+        "Paid \$12 for Netflix Subscription",
+        "Sent \$15 to Amazon",
+        "Paid \$30 for Spotify Subscription"
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar()
+
+        TopBar(navController = navController)
+
         HomeBodyContent(
             balance = balance,
             recentTransactions = recentTransactions,
@@ -51,17 +49,17 @@ fun HomeScreen() {
                 // Handle schedule payments button click
             }
         )
-        Box() {
-            BottomBar(modifier =Modifier.align(Alignment.BottomCenter))
+
+        Box {
+            BottomBar(modifier = Modifier.align(Alignment.BottomCenter))
         }
     }
 }
 
 @Composable
 fun TopBar(
-
+    navController: NavController
 ) {
-val navController= rememberNavController()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,7 +76,7 @@ val navController= rememberNavController()
                 .clip(CircleShape)
                 .background(Color.LightGray)
                 .padding(8.dp)
-                .clickable { navController.navigate(Screens.ProfileScreen.route) }
+                .clickable { navController.navigate(Screens.ProfileScreen.route) } // Use the passed navController
         )
 
         // Greeting

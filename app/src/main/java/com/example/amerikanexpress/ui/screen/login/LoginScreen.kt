@@ -513,7 +513,6 @@ fun LoginScreen(
             )
         }
     }
-
 }
 
 @Composable
@@ -525,7 +524,6 @@ fun Greeting() {
         fontSize = 22.sp,
         fontWeight = FontWeight.SemiBold,
     )
-
 }
 
 fun greetingMessage():String{
@@ -537,5 +535,3 @@ fun greetingMessage():String{
         else -> "Good Evening!"
     }
 }
-
-
