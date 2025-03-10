@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -35,28 +36,23 @@ import com.example.amerikanexpress.ui.screen.data.Screens
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-//@Preview
 fun SignUpScreen(
     viewModel: SignUpViewModel,
     navController: NavController
 ) {
-
-   // CheckUser(navController)
-
     var isChecked by remember { mutableStateOf(false) }
-    val email by viewModel.email.observeAsState("")
-    val password by viewModel.password.observeAsState("")
-    val confirmPassword by viewModel.confirmPassword.observeAsState("")
-    val signUpResult by viewModel.signUpResult.observeAsState(null)
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val confirmPassword by viewModel.confirmPassword.collectAsState()
+    val signUpResult by viewModel.signUpResult.collectAsState()
 
     LaunchedEffect(signUpResult) {
-        signUpResult?.getOrNull()?.let { succes ->
-            if (succes){
+        signUpResult?.getOrNull()?.let { success ->
+            if (success) {
                 navController.navigate(Screens.LoginScreen.route)
             }
         }
     }
-
 
     Column(
         modifier = Modifier
@@ -116,20 +112,18 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            //Error message
-            signUpResult?.exceptionOrNull()?.let{ error ->
-                Text(text = error.message?: "An error occured", color = MaterialTheme.colorScheme.error)
-
+            // Error message
+            signUpResult?.exceptionOrNull()?.let { error ->
+                Text(text = error.message ?: "An error occurred", color = MaterialTheme.colorScheme.error)
             }
-
         }
 
         Button(
             onClick = {
-                if(password == confirmPassword){
-                    viewModel.signUpUser(email,password)
-                }else{
-
+                if (password == confirmPassword) {
+                    viewModel.signUpUser(email, password, confirmPassword)
+                } else {
+                    // Handle password mismatch
                 }
             },
             modifier = Modifier
@@ -153,7 +147,7 @@ fun SignUpScreen(
                 text = "Already have an account?",
                 fontSize = 18.sp,
                 modifier = Modifier.weight(1f),
-                )
+            )
             TextButton(
                 onClick = { navController.navigate(Screens.LoginScreen.route) },
             ) {
@@ -162,7 +156,7 @@ fun SignUpScreen(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
-                    )
+                )
             }
         }
 
@@ -184,14 +178,6 @@ fun SignUpScreen(
                 fontSize = 18.sp,
                 modifier = Modifier.weight(1f)
             )
-        }
-    }
-
-    LaunchedEffect(signUpResult) {
-        signUpResult?.getOrNull()?.let {
-            if(it){
-                navController.navigate(Screens.LoginScreen.route)
-            }
         }
     }
 }
