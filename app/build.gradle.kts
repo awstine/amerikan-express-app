@@ -47,6 +47,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/NOTICE.md"
         }
     }
 }
@@ -85,5 +87,19 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:21.0.1")
     implementation ("androidx.biometric:biometric:1.2.0-alpha05")
    // implementation platform('com.google.firebase:firebase-bom:33.9.0')
+
+    // For email sending
+    implementation ("com.sun.mail:android-mail:1.6.7")
+    implementation ("com.sun.mail:android-activation:1.6.7")
+
+    // For OTP generation
+    implementation ("commons-codec:commons-codec:1.15")
+
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //Logging interceptor
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
 
 }
