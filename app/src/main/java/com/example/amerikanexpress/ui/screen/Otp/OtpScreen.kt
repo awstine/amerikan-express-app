@@ -124,19 +124,8 @@ fun OTPScreen(
         // Verify Button
 
 
-        Button(onClick = {
-            if (otpValue.length == 4) {
-                if (verifyOTP(otpValue)) {
-                    // Navigate to the next screen
-                    navController.navigate("home")
-                } else {
-                    otpValue = ""
-                    message = "Invalid OTP. Please try again."
-                }
-            } else {
-                message = "Please enter a 4-digit OTP."
-            }
-        }, modifier = Modifier
+        Button(onClick = {},
+            modifier = Modifier
             .padding(26.dp)
             .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp)
@@ -148,10 +137,6 @@ fun OTPScreen(
 
         // Resend OTP Button
         TextButton(onClick = {
-            val newOTP = generateOTP()
-            sendOTP(newOTP)
-            otpValue = ""
-            message = "New OTP sent via email"
         }) {
             Text("Resend OTP")
         }
@@ -188,22 +173,6 @@ fun OTPTextField(
             }
         }
     )
-}
-
-// Simulate OTP verification logic
-fun verifyOTP(otp: String): Boolean {
-    // Replace with actual verification logic (e.g., compare with stored OTP)
-    return otp == "1234" // Example: Hardcoded OTP for testing
-}
-
-// Simulate OTP generation
-fun generateOTP(): String {
-    return (1000..9999).random().toString() // Generate a random 4-digit OTP
-}
-
-// Simulate sending OTP (e.g., via SMS or email)
-fun sendOTP(otp: String) {
-    println("OTP sent: $otp") // Replace with actual sending logic
 }
 
 //0700142012

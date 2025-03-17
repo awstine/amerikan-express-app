@@ -3,8 +3,6 @@ package com.example.amerikanexpress.ui.screen.Otp
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.amerikanexpress.ui.screen.OtpScreen.generateOTP
-import com.example.amerikanexpress.ui.screen.OtpScreen.sendOTP
 
 class OTPviewModel: ViewModel(){
 
