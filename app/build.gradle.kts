@@ -108,5 +108,4 @@ dependencies {
     implementation (libs.androidx.lifecycle.runtime.ktx.v261)
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-
 }
